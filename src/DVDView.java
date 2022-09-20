@@ -91,22 +91,39 @@ public class DVDView {
 		}
 		System.out.println("---------------------");
 	}
-	public void editDVD() { //Not finsihed
+	public void editDVD() {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Enter the name of the dvd you wish to edit: ");
+		String title = sc.nextLine();
+		System.out.println("Which attribute would you like to edit?");
+		System.out.println("[1] Title\r\n"
+				+ "[2] ReleaseDate\r\n"
+				+ "[3] Mpaa Rating\r\n"
+				+ "[4] Director\r\n"
+				+ "[5] Studio\r\n"
+				+ "[6] User Note");
+		System.out.print(": ");
+		int option = sc.nextInt();
 		sc.nextLine();
+		System.out.print("What would you like the new value to be: ");
+		String newValue = sc.nextLine();
+		dvdService.editDVD(title, option, newValue);
+		System.out.println("Edit Completed");
+		
 	}
 	public void dvdInfo() {
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Enter the name of the dvd: ");
-		String title = sc.nextLine();
+		System.out.print("\nEnter the name of the dvd: ");
+		String title = sc.next();
 		System.out.println(dvdService.dvdInfo(title));
-		
-		
+			
 	}
 	public void dvdSearch() {
-		
-		
-		
+		Scanner sc = new Scanner(System.in);
+		System.out.print("\nEnter the name of the dvd you would like to search for: ");
+		String title = sc.nextLine();
+		System.out.println(dvdService.dvdSearch(title));
 	}
+
+	
 }

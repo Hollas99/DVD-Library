@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.google.gson.Gson;
 
@@ -77,19 +78,50 @@ public class DVDService  {
 				break;
 			}
 		}
-		System.out.println("chicken nugget");
+		
+		System.out.println("Film removed successfully");
 		saveDVDs(dvdList);
 		
 	}
 	public String dvdInfo(String title) {
 		ArrayList<DVD> dvdList =  loadDVDs();
-		for (DVD d : dvdList) {
-			if (d.getTitle().toLowerCase().contentEquals(title.toLowerCase())) {
-				return d.toString();
-			}
-		}
-		
+		System.out.println(findDvdTitle(title, dvdList).toString());
 		return "Movie name does not exist";
 	}
-
+	public void editDVD(String title, int option, String newValue) {
+		ArrayList<DVD> dvdList =  loadDVDs();
+		DVD dvd = findDvdTitle(title, dvdList);
+		if (option ==1)
+			dvd.setTitle(newValue);
+		else if (option ==2 )
+			dvd.setReleaseDate(LocalDate.parse(newValue));
+		else if (option == 3)
+			dvd.setMpaaRating(newValue);
+		else if (option == 4)
+			dvd.setDirector(newValue);
+		else if (option == 5)
+			dvd.setStudio(newValue);
+		else if (option == 6)
+			dvd.setUserNote(newValue);
+		else
+			System.out.println("Invalid Option");
+		saveDVDs(dvdList);
+		
+	}
+	public DVD findDvdTitle(String title, ArrayList<DVD> dvdList) {
+		for (DVD d : dvdList) {
+			if (d.getTitle().toLowerCase().contentEquals(title.toLowerCase()))
+				return d;
+		}
+		System.out.println("DVD title not found!");
+		return null;
+	}
+	public String dvdSearch(String title) {
+		ArrayList<DVD> dvdList =  loadDVDs();
+		DVD dvd =findDvdTitle(title, dvdList);
+		if ((dvd) == null)
+			return ("Title could not be found");
+		else
+			return dvd.toString();
+	}
 }
